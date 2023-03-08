@@ -23,17 +23,89 @@
 <!-- CDN(Content Delivery Network) 호스트 사용 -->
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
-	</script>
-
-<script type="text/javascript">
-
+	
 	// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
 	function fncGetList(currentPage) {
-	document.getElementById("currentPage").value = currentPage;
-	document.detailForm.submit();		
+		$("#currentPage").val(currentPage);
+		
+		$("form").attr("method", "POST"). attr("action" , "/product/listProduct?menu=${param.menu}").submit();
+		
 	}
 	
-</script>
+	$(function () {
+		
+		$("td.ct_btn01:contains('검색')").on("click", function () {
+			fncGetList('1');
+		});
+		
+		
+		<c:choose>
+			<c:when test="${param.menu eq 'manage'}">
+			
+				$(".ct_list_pop td:nth-child(3)").on("click", function () {
+					var prodNo = $(this).children("input:hidden").val();
+					
+					alert("상품번호는? "+prodNo);
+					self.location = "/product/updateProduct?prodNo="+prodNo;
+					
+				})
+			
+			</c:when>
+			
+			<c:when test="${param.menu eq 'search'}">
+			
+				$(".ct_list_pop td:nth-child(3)").on("click", function () {
+					
+					
+					var prodNo = $(this).children("input:hidden").val();
+					
+					alert("눌렀다아아아아아아"+prodNo);
+					
+					$.ajax(
+							{
+								url : "/product/json/getProduct/"+prodNo ,
+								method : "GET",
+								dataType : "json",
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function (JSONData, status) {
+									
+									//Debug...
+									//alert(status);
+									//Debug...
+									//alert("JSONData : \n"+JSONData);
+									
+									var displayValue = "<h3>"
+																+"상품번호 : "+JSONData.prodNo+"<br/>"
+																+"상품명 : "+JSONData.prodName+"<br/>"
+																+"상품이미지 : "+JSONData.fileName+"<br/>"
+																+"상품상세정보 : "+JSONData.prodDetail+"<br/>"
+																+"제조일자 : "+JSONData.manuDate+"<br/>"
+																+"가격 : "+JSONData.price+"<br/>"
+																+"등록일자 : "+JSONData.regDateString+"<br/>"
+																+"</h3>";
+								$("h3").remove();
+								$("#"+prodNo+"").html(displayValue);
+								}
+						});
+					
+				});
+			
+			</c:when>
+		</c:choose>
+		
+		$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
+		$("h7").css("color" , "red");
+		
+		
+		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
+	});	
+		
+	</script>
+
+
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -41,7 +113,7 @@
 <div style="width:98%; margin-left:10px;">
 
 
-<form name="detailForm" action="/product/listProduct?menu=${param.menu}" method="post">
+<form name="detailForm" >
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -95,7 +167,7 @@
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncGetList('1');">검색</a>
+						검색
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
@@ -114,7 +186,10 @@
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">상품명</td>
+		<td class="ct_list_b" width="150">
+			상품명<br>
+			<h7>(상품명 click :  상세정보)</h7>
+		</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">가격</td>
 		<td class="ct_line02"></td>
@@ -135,19 +210,12 @@
 		<tr class="ct_list_pop">
 			<td align="center">${ i }</td>
 			<td></td>
+				<td align="left">
+				
+					<input type=hidden value=${product.prodNo} >
 			
-				<c:if test="${!empty param.menu}">
-					<c:choose>
-						<c:when test="${param.menu eq 'manage'}">
-							<td align="left"><a href="/product/updateProduct?prodNo=${product.prodNo }&menu=${param.menu }">${product.prodName }</a></td>
-						</c:when>
-						<c:when test="${param.menu eq 'search'}">
-							<td align="left"><a href="/product/getProduct?prodNo=${product.prodNo }&menu=${param.menu }">${product.prodName }</a></td>
-						</c:when>
-					</c:choose>
-				</c:if>
-				
-				
+					${product.prodName }
+					
 			<td></td>
 		<td align="left">${product.price }</td>
 		<td></td>
@@ -186,7 +254,8 @@
 		</c:choose>
 	</tr>
 	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
+		<!--  <td colspan="11" bgcolor="D6D7D6" height="1"></td>-->
+		<td id ="${product.prodNo }" colspan="11" bgcolor="D6D7D6" height="1"></td>
 	</tr>
 	
 	</c:forEach>

@@ -67,8 +67,8 @@ function fncAddProduct(){
 			
 			show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value);
 			
-		} )
-	})
+		});
+	});
 
 </script>
 </head>
@@ -78,6 +78,8 @@ function fncAddProduct(){
 <form name="detailForm" method="post">
 
 <input type="hidden" name="prodNo" value="${product.prodNo}"/>
+
+<input type="hidden" name="regDate" value="${product.regDate}"/>
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
