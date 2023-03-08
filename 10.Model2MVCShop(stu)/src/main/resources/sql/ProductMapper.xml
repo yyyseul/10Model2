@@ -101,5 +101,12 @@
 							</where>
 						</if> ) countTable						
 	 </select>
+	 
+	 <!-- SQL : SELECT LIST -->
+	 <select id="autocomplete" resultType="string">
+	 	SELECT prod_name
+	 	FROM product
+	 </select>
+
 
 </mapper>

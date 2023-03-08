@@ -1,5 +1,6 @@
 package com.model2.mvc.service.user;
 
+import java.util.List;
 import java.util.Map;
 
 import com.model2.mvc.common.Search;
@@ -24,4 +25,6 @@ public interface UserService {
 	// 회원 ID 중복 확인
 	public boolean checkDuplication(String userId) throws Exception;
 	
+	//autocomplete
+	public List<String> autocomplete() throws Exception;
 }

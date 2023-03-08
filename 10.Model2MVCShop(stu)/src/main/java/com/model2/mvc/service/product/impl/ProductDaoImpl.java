@@ -59,4 +59,11 @@ public class ProductDaoImpl implements ProductDao {
 		return sqlSession.selectOne("ProductMapper.getTotalCount", search);
 	}
 
+	public List<String> autocomplete() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ProductMapper.autocomplete");
+	}
+
+
+
 }

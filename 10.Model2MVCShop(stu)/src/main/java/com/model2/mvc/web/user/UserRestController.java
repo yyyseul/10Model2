@@ -1,5 +1,9 @@
 package com.model2.mvc.web.user;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.user.UserService;
 
@@ -58,4 +63,27 @@ public class UserRestController {
 	
 		return dbUser;
 	}
+	
+	@RequestMapping(value = "json/getUserList")
+	public Map<String, Object> getUserList(@RequestBody Search search) throws Exception{
+		System.out.println("/user/json/getUserList : GET/ POST");
+		
+		userService.getUserList(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("getUserList", "Çß´Ù");
+		
+		return userService.getUserList(search);
+		
+	}
+	
+	@RequestMapping(value="json/autocomplete")
+	public List<String> autocomplete() throws Exception{
+		System.out.println("/user/json/autocomplete : GET/ POST");
+		
+		userService.autocomplete();
+		
+		return userService.autocomplete();
+	}
 }
+	

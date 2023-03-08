@@ -4,6 +4,9 @@
 
 <html>
 <head>
+
+	<!-- autocomplete을 위해 추가 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>
 
 	<c:if test="${!empty param.menu}">
@@ -18,10 +21,21 @@
 	</c:if>	
 
 </title>
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<!-- CDN(Content Delivery Network) 호스트 사용 -->
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!-- autocomplete을 위해 추가 -->
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+
+	<link rel="stylesheet" href="/css/admin.css" type="text/css">
+
+
+ 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+ 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+		
+
+<!-- CDN(Content Delivery Network) 호스트 사용
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script> -->
 	<script type="text/javascript">
 	
 	// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
@@ -58,8 +72,7 @@
 					
 					
 					var prodNo = $(this).children("input:hidden").val();
-					
-					alert("눌렀다아아아아아아"+prodNo);
+
 					
 					$.ajax(
 							{
@@ -104,6 +117,39 @@
 	});	
 		
 	</script>
+	
+			<!-- autocomplete을 위해 추가 -->
+	<script type="text/javascript">
+  $( function() {
+	  
+	  $.ajax( 
+				{
+					url : "/product/json/autocomplete" ,
+					method : "GET" ,
+					dataType : "json" ,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData , status) {
+
+						//Debug...
+						//alert(status);
+						//Debug...
+						alert("JSONData : \n"+JSONData);
+						
+						var availableTags = JSONData;
+						
+						$( "#searchKeyword" ).autocomplete({
+						      source: availableTags
+						});
+						
+					}
+				});
+
+  } );
+  </script>	
+	
 
 
 </head>
@@ -156,7 +202,7 @@
 			<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>상품가격</option>
 			
 			</select>
-			<input type="text" name="searchKeyword" 
+			<input type="text" name="searchKeyword" id="searchKeyword"
 						value="${! empty search.searchKeyword ? search.searchKeyword : ""}"  >
 		</td>
 

@@ -8,13 +8,23 @@
 
 <head>
 	<meta charset="EUC-KR">
+	<!-- autocomplete을 위해 추가 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
 	<title>회원 목록 조회</title>
 	
-	
+	<!-- autocomplete을 위해 추가 -->
 	<link rel="stylesheet" href="/css/admin.css" type="text/css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+ 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+ 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	
-	<!-- CDN(Content Delivery Network) 호스트 사용 -->
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	
+	<!-- CDN(Content Delivery Network) 호스트 사용 autocomplete을 위해 주석처리
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+
 	<script type="text/javascript">
 	
 		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
@@ -32,7 +42,7 @@
 			 $( "td.ct_btn01:contains('검색')" ).on("click" , function() {
 				//Debug..
 				//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
-				fncGetUserList(1);
+				fncGetList(1);
 			});
 			
 			
@@ -87,8 +97,42 @@
 			//==> 아래와 같이 정의한 이유는 ??
 			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
 		});	
-		
-	</script>		
+
+	</script>
+	
+			<!-- autocomplete을 위해 추가 -->
+	<script type="text/javascript">
+  $( function() {
+	  
+	  $.ajax( 
+				{
+					url : "/user/json/autocomplete" ,
+					method : "GET" ,
+					dataType : "json" ,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData , status) {
+
+						//Debug...
+						//alert(status);
+						//Debug...
+						alert("JSONData : \n"+JSONData);
+						
+						var availableTags = JSONData;
+						
+						$( "#searchKeyword" ).autocomplete({
+						      source: availableTags
+						});
+						
+					}
+				});
+
+  } );
+  </script>	
+	
+
 	
 </head>
 
@@ -123,7 +167,7 @@
 				<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
 				<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
 			</select>
-			<input type="text" name="searchKeyword" 
+			<input type="text" name="searchKeyword" id="searchKeyword"
 						value="${! empty search.searchKeyword ? search.searchKeyword : ""}"  
 						class="ct_input_g" style="width:200px; height:20px" > 
 		</td>

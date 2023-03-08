@@ -50,4 +50,12 @@ public class UserDaoImpl implements UserDao{
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("UserMapper.getTotalCount", search);
 	}
+
+	@Override
+	public List<String> autocomplete() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("UserMapper.autocomplete");
+	}
+	
+	
 }

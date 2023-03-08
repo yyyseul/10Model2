@@ -95,4 +95,11 @@
 						</if> ) countTable						
 	 </select>
 	 
+	 <!-- SQL : SELECT LIST -->
+	 <select id="autocomplete" resultType="string">
+	 	SELECT user_id
+	 	FROM users
+	 </select>
+
+ 
 </mapper>

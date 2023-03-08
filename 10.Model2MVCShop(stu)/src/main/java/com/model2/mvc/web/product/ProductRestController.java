@@ -1,6 +1,7 @@
 package com.model2.mvc.web.product;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Product;
+import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.product.ProductService;
 
 //==> 상품관리 RestController
@@ -79,5 +81,17 @@ public class ProductRestController {
 		return search;
 	}
 	
+	@RequestMapping(value = "json/autocomplete")
+	public List<String> autocomplete() throws Exception{
+		
+		System.out.println("/product/json/autocomplete : GET");
+		
+		List<String> list = productService.autocomplete();
+		
+		return list;
+				
+	}
+	
+
 
 }

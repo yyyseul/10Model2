@@ -132,5 +132,7 @@ public class ProductController {
 		System.out.println("등록일자가 안나와"+product.getRegDate());
 		return "forward:/product/updateProduct.jsp";
 	}
+	
+	
 
 }

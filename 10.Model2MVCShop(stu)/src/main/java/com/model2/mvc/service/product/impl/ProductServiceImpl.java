@@ -65,4 +65,11 @@ public class ProductServiceImpl implements ProductService {
 		productDao.updateProduct(product);
 	}
 
+	@Override
+	public List<String> autocomplete() throws Exception {
+		
+		return productDao.autocomplete();
+	}
+
+
 }
