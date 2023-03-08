@@ -12,6 +12,25 @@
 <!-- CDN(Content Delivery Network) 호스트 사용 -->
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
+	
+	$(function () {
+
+		$("td.ct_btn01:contains('이전')").on("click", function () {
+				
+			history.go(-1);
+		});
+		
+		$("td.ct_btn01:contains('구매')").on("click", function () {
+			
+			self.location = "/purchase/addPurchase?prodNo=${product.prodNo}";
+		});
+		
+		$("td.ct_btn01:contains('수정')").on("click", function () {
+			
+			self.location = "/product/updateProduct?prodNo=${product.prodNo}";
+		});
+
+	});
 	</script>
 
 
@@ -128,20 +147,13 @@
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-				<%--///////////////////////EL/JSTL을 위해 주석처리//////////////////////// 
-					<% if(menu.equals("search")){%>
-						<a href="/addPurchaseView.do?prodNo=<%=product.getProdNo() %>">구매</a>
-					<% }else if(menu.equals("manage")){%>
-						<a href="/updatePoductView.do?prodNo=<%=product.getProdNo() %>">수정</a>
-					<% } %>
-					///////////////////////EL/JSTL을 위해 주석처리//////////////////////// --%>
-				<c:if test="${!empty param.menu && param.menu eq 'search'}">
-					<a href="/purchase/addPurchase?prodNo=${product.prodNo}">구매</a>
-				</c:if>
-				<c:if test="${!empty param.menu && param.menu eq 'manage'}">
-					<a href="/product/updateProduct?prodNo=${product.prodNo}">수정</a>
-				</c:if>
-				
+
+					<c:if test="${!empty param.menu && param.menu eq 'search'}">
+						구매
+					</c:if>
+					<c:if test="${!empty param.menu && param.menu eq 'manage'}">
+						수정
+					</c:if>				
 					
 				</td>
 				<td width="14" height="23">
@@ -153,7 +165,7 @@
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="javascript:history.go(-1)">이전</a>
+					이전
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23">
