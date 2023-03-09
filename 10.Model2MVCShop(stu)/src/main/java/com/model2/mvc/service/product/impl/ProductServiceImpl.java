@@ -35,8 +35,8 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void addProduct(Product product) throws Exception {
 		
-		//tranNo="1" 판매중
-		product.setProTranCode("1");
+		//tranNo="1" 판매중 => 여기말고 controller에서 한다면?
+		//product.setProTranCode("1");
 		
 		productDao.addProduct(product);
 	}

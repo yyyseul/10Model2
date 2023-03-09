@@ -23,6 +23,7 @@
 		<context:include-filter 	type="annotation"		expression="org.springframework.stereotype.Controller" />
 		<context:exclude-filter 	type="annotation" 	expression="org.springframework.stereotype.Service"/>
 		<context:exclude-filter 	type="annotation" 	expression="org.springframework.stereotype.Repository"/>
+					
 	</context:component-scan> 
 	
 	
@@ -52,6 +53,11 @@
     <bean id="viewResolver"
 				class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
 	
+	
+	<!-- 파일 업로드를 위한 추가 web.xml에 추가할지 이걸할지 추가 
+	<bean id="multipartResolver"	
+		class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>-->
+
 	
 	<!--	
 		■ / 형식의 Mapping 은 모든(정적,동적 자원) 요청시 처리책임

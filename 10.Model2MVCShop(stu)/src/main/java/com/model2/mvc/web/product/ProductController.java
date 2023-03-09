@@ -1,5 +1,6 @@
 package com.model2.mvc.web.product;
 
+import java.io.File;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
@@ -31,6 +34,8 @@ public class ProductController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
+	
+	String uploadFolder = "C:\\Users\\YUN\\git\\10Model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles";
 
 	///Constructor
 	public ProductController() {
@@ -44,7 +49,8 @@ public class ProductController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	
-	//@RequestMapping("/addProductView.do")
+	
+		//@RequestMapping("/addProductView.do")
 	@RequestMapping(value = "addProduct",method = RequestMethod.GET)
 	public String addProduct() throws Exception{
 		
@@ -55,11 +61,25 @@ public class ProductController {
 	
 	//@RequestMapping("/addProduct.do")
 	@RequestMapping(value = "addProduct", method = RequestMethod.POST)
-	public String addProduct(@ModelAttribute("product")Product product) throws Exception{
+	public String addProduct(@ModelAttribute("product")Product product, @RequestParam("fileName2") MultipartFile multipartFile) throws Exception{
+		
 		
 		System.out.println("/product/addProduct : POST");
 		
+		String file = multipartFile.getOriginalFilename();
+		product.setFileName(file);
+		
+		//tranNo="1" 판매중
+		product.setProTranCode("1");
+		
 		productService.addProduct(product);
+		
+		
+		file = System.currentTimeMillis()+"_"+file;
+		product.setFileName(file);
+		File saveFile = new File("C:\\Users\\YUN\\git\\10Model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles",file);
+		
+		multipartFile.transferTo(saveFile);
 		
 		return "forward:/product/addProduct.jsp";
 		
@@ -123,15 +143,24 @@ public class ProductController {
 	}
 	//@RequestMapping("/updateProduct.do")
 	@RequestMapping(value = "updateProduct", method = RequestMethod.POST)
-	public String updateProduct(@ModelAttribute("product") Product product, Model model, HttpSession session) throws Exception{
+	public String updateProduct(@ModelAttribute("product") Product product, Model model, HttpSession session,  @RequestParam("fileName2") MultipartFile multipartFile) throws Exception{
 		
 		System.out.println("/product/updateProduct : POST");
 		
+		String file = multipartFile.getOriginalFilename();
+		product.setFileName(file);
+		
 		productService.updateProduct(product);
 		
-		System.out.println("등록일자가 안나와"+product.getRegDate());
+		File saveFile = new File("C:\\Users\\YUN\\git\\10Model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles",file);
+		
+		multipartFile.transferTo(saveFile);
+		
+		
 		return "forward:/product/updateProduct.jsp";
 	}
+	
+	
 	
 	
 

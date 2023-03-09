@@ -49,6 +49,15 @@
 		    </init-param>
 		    
 		    <load-on-startup>1</load-on-startup>
+		    
+		    <!-- 파일업로드를 위한 추가 -->
+		    <multipart-config>
+		    	<location>C:\Users\YUN\git\10Model2\10.Model2MVCShop(stu)\src\main\webapp\images\uploadFiles</location>
+		    	<max-file-size>20971520</max-file-size>
+		    	<max-request-size>41943040</max-request-size>
+		    	<file-size-threshold>20971520</file-size-threshold>
+		    </multipart-config>
+		    
   </servlet>
   
 	<!-- 	URI : / 형식  Servlet Mapping -->

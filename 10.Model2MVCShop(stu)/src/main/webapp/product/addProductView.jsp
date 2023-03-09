@@ -45,7 +45,7 @@ function fncAddProduct(){
 		return;
 	}
 	
-	$("form").attr("method","POST").attr("action", "/product/addProduct").submit;
+	$("form").attr("method","POST").attr("action", "/product/addProduct").attr("enctype","multipart/form-data").submit();
 
 }
 
@@ -65,8 +65,8 @@ function fncAddProduct(){
 	});
 	
 	$(function () {
-		$(".ct_input_g img").on("click", function () {
-			
+		$("#cal").on("click", function () {
+			//alert("눌렀다");
 			show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value);
 		});
 		
@@ -79,6 +79,11 @@ function fncAddProduct(){
 <body bgcolor="#ffffff" text="#000000">
 
 <form name="detailForm" >
+
+<!-- 구매코드 "1" => 판매중
+<input type="hidden" name="proTranCode" value="1"/> 
+
+<input type="hidden" name="regDate" value="${product.regDate}"/>-->
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -143,7 +148,7 @@ function fncAddProduct(){
 		<td class="ct_write01">
 			<input type="text" name="manuDate" readonly="readonly" class="ct_input_g"  
 						style="width: 100px; height: 19px"	maxLength="10" minLength="6"/>
-				&nbsp;<img src="../images/ct_icon_date.gif" width="15" height="15" />
+				&nbsp;<img id="cal" src="../images/ct_icon_date.gif" width="15" height="15" />
 		</td>
 	</tr>
 	<tr>
@@ -166,7 +171,7 @@ function fncAddProduct(){
 		<td width="104" class="ct_write">상품이미지</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input		type="text" name="fileName" class="ct_input_g" 
+			<input		type="file" name="fileName2" class="ct_input_g" 
 							style="width: 200px; height: 19px" maxLength="13"/>
 		</td>
 	</tr>
