@@ -34,8 +34,6 @@ public class ProductController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
-	
-	String uploadFolder = "C:\\Users\\YUN\\git\\10Model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles";
 
 	///Constructor
 	public ProductController() {
