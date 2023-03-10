@@ -71,10 +71,10 @@ public class ProductController {
 		product.setProTranCode("1");
 		
 		productService.addProduct(product);
-		
-		
+			
 		file = System.currentTimeMillis()+"_"+file;
 		product.setFileName(file);
+		
 		File saveFile = new File("C:\\Users\\YUN\\git\\10Model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles",file);
 		
 		multipartFile.transferTo(saveFile);
