@@ -70,7 +70,7 @@
 			
 				$(".ct_list_pop td:nth-child(3)").on("click", function () {
 					
-					
+					alert("상품번호는? "+prodNo);
 					var prodNo = $(this).children("input:hidden").val();
 
 					

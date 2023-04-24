@@ -27,6 +27,31 @@
 
 	<script type="text/javascript">
 	
+	
+	<!--무한 스크롤을 위해 추가-->
+	
+	var page = 2;
+
+	$(window).scroll(function() {
+	    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+	      console.log(++page);
+	      //들어가는 값의 형태 생각해보기
+	      //$("#userList").append('<tr class="ct_list_pop"><td align="center"> ' +  i + '</td> <td></td>'
+	    //		  				+'<td align="left">'+user.userId+'</td> <td></td>'
+	    	//	  				+'<td align="left">'+user.userName+'</td> <td></td>'
+	    		//  				+'<td align="left">'+user.emai+'</td> </tr>');
+	      
+	      $("#userList").append('<td align="center"> ' + number + '</td> <td></td>'
+	  				+'<td align="left">'+user777+'</td> <td></td>'
+	  				+'<td align="left">'+user777+'</td> <td></td>'
+	  				+'<td align="left">'+777@mail.com+'</td> ');
+	      
+	      
+	      //$("#userList").append('<div class="big-box"><h1>Page ' + page + '</h1></div>');
+	      
+	    
+	});
+	
 		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
 		function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
@@ -185,7 +210,7 @@
 	</tr>
 </table>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
+<table  id=userList width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td colspan="11" >
 			전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
@@ -228,6 +253,9 @@
 		</tr>
 
 	</c:forEach>
+	
+	<div class="big-box"><h1>Page 1</h1></div>
+	<div class="big-box"><h1>Page 2</h1></div>
 </table>
 
 

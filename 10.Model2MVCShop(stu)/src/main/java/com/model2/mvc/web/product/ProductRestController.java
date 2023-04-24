@@ -78,6 +78,8 @@ public class ProductRestController {
 		//Map<String, Object> map = new HashMap<String, Object>();
 		//map.put("getProductList", "했다");
 		
+		//리턴값을 도메인객체 => json object로 바꿔주기 때문에
+		//List<Product>로 오게 해주자 list랑 totalCount중에 list만 쓸거야
 		return search;
 	}
 	
